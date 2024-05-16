@@ -1,0 +1,40 @@
+.sidebarHeader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 0.3rem;
+    border: 0.05rem solid rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+  }
+  
+  .sidebarHeader:hover {
+    background-color: #2b2c2f;
+  }
+
+  .uploadedFilesList{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .uploadedFileItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background-color: #2b2c2f;
+    border-radius: 0.3rem;
+  }
+
+
+  .cost{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-left: 3px;
+  }
