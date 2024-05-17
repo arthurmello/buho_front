@@ -1,8 +1,5 @@
-# pull official base image
-FROM node:13.12.0-alpine
-
 # Use the slim version of the node 14 image as our base
-FROM node:14-slim
+FROM node:20.13.0
 
 # Create a directory for our application in the container 
 RUN mkdir -p /usr/src/app
