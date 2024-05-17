@@ -26,5 +26,5 @@ RUN npm install
 # Build the React app
 RUN npm run build
 
-# Serve the 'build' directory on port 8080 using 'serve'
-CMD ["serve", "-s", "-l", "8080", "./build"]
+# Serve the 'dist' directory on port 8080 using 'serve'
+CMD ["serve", "-s", "-l", "8080", "./dist"]
