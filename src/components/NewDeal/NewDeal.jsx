@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import styles from "./NewDeal.module.css";
-import { BiPlus, BiReset, BiCheck } from "react-icons/bi";
+import { BiPlus, BiCheck } from "react-icons/bi";
 import Loader from "../Loader/Loader";
 
 const NewDeal = ({ onNewDeal }) => {
@@ -28,7 +28,7 @@ const NewDeal = ({ onNewDeal }) => {
     });
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/upload`,
+        `${import.meta.env.VITE_BACK_API_URL}/upload`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

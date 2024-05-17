@@ -7,7 +7,6 @@ import {
 } from "react";
 import {
   BiPlus,
-  BiUser,
   BiSend,
   BiSolidUserCircle,
   BiMoney,
@@ -16,7 +15,6 @@ import { MdOutlineArrowLeft, MdOutlineArrowRight } from "react-icons/md";
 import NewDeal from "./components/NewDeal/NewDeal";
 import Modal from "./components/Modal/Modal";
 import QuestionForm from "./components/QuestionForm/QuestionForm";
-import Loader from "./components/Loader/Loader";
 
 function App() {
   const [text, setText] = useState("");
@@ -33,7 +31,7 @@ function App() {
   useEffect(() => {
     const fetchQas = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/qas`);
+        const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas`);
         const data = await response.json();
         setQas(data.qas);
       } catch (error) {
@@ -46,7 +44,7 @@ function App() {
   const reset = async () => {
     setText("");
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/qas/reset`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas/reset`);
       await response.json();
       setQas([]);
     } catch (error) {
@@ -91,7 +89,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/ask`,
+        `${import.meta.env.VITE_BACK_API_URL}/ask`,
         options
       );
 

@@ -14,9 +14,6 @@ COPY . .
 # 'PWD' is an environment variable that stores the path of the current working directory
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 
-# Set the environment variable for the application's port
-ENV PORT 8080
-
 # Install 'serve', a static file serving package globally in the container
 RUN npm install -g serve
 
