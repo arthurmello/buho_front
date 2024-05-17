@@ -14,6 +14,9 @@ COPY . .
 # 'PWD' is an environment variable that stores the path of the current working directory
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 
+# Set up backed URL
+ENV VITE_BACK_API_URL=${_VITE_BACK_API_URL}
+
 # Install 'serve', a static file serving package globally in the container
 RUN npm install -g serve
 
