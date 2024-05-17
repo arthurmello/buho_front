@@ -17,7 +17,7 @@ RUN npm install react-scripts@3.4.1 -g --silent
 COPY . ./
 
 # Make port available to the world outside this container
-EXPOSE 5173
+EXPOSE 8080
 
 # start app
 CMD ["npm", "run", "dev:front"]
