@@ -15,7 +15,7 @@ COPY . .
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 
 # Set up backed URL
-ENV VITE_BACK_API_URL=https://backend-image-4rwlrmjnnq-ew.a.run.app
+ENV VITE_BACK_API_URL=https://buho-back-4rwlrmjnnq-uc.a.run.app
 
 # Install 'serve', a static file serving package globally in the container
 RUN npm install -g serve
