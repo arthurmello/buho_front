@@ -3,7 +3,7 @@ name: Deploy to Cloud Run
 env:
   SERVICE_NAME: buho-front
   PROJECT_ID: buho-421304
-  DOCKER_IMAGE_URL: europe-west1-docker.pkg.dev/buho-421304/buho-docker-repo/frontend-image
+  DOCKER_IMAGE_URL: europe-west1-docker.pkg.dev/buho-docker-repo/frontend-image
   
 
 on:
