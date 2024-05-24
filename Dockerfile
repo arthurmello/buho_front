@@ -14,8 +14,8 @@ COPY . .
 # 'PWD' is an environment variable that stores the path of the current working directory
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 
-# Set up backed URL
-ENV VITE_BACK_API_URL=https://buho-back-4rwlrmjnnq-uc.a.run.app
+# # Set up backed URL
+# ENV VITE_BACK_API_URL=https://buho-back-4rwlrmjnnq-uc.a.run.app
 
 # Install 'serve', a static file serving package globally in the container
 RUN npm install -g serve
