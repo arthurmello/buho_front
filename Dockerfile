@@ -14,14 +14,16 @@ COPY . .
 # 'PWD' is an environment variable that stores the path of the current working directory
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 
-# Set up backend URL
-ARG VITE_BACK_API_URL=${_VITE_BACK_API_URL}
+# # Set up backend URL
+# ARG VITE_BACK_API_URL=${_VITE_BACK_API_URL}
 
 # Install 'serve', a static file serving package globally in the container
 RUN npm install -g serve
 
 # Install all the node modules required by the React app
 RUN npm install
+
+RUN npm run create-env
 
 # Build the React app
 RUN npm run build
