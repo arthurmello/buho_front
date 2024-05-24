@@ -4,4 +4,13 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/buho-421304/git-deploy/front:$SHORT_SHA']
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['run', 'deploy', '$PROJECT_ID', '--region=europe-west1', '--platform=managed', '--allow-unauthenticated', '--image=gcr.io/buho-421304/git-deploy/front:$SHORT_SHA']
+  args:
+    - 'run'
+    - 'deploy'
+    - '$PROJECT_ID-front'
+    - '--region=europe-west1'
+    - '--platform=managed'
+    - '--allow-unauthenticated'
+    - '--image=gcr.io/buho-421304/git-deploy/front:$SHORT_SHA'
+    - '--set-env-vars'
+    - 'VITE_BACK_API_URL=${_VITE_BACK_API_URL}'
