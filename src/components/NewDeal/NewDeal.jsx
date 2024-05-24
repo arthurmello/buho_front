@@ -28,7 +28,7 @@ const NewDeal = ({ onNewDeal }) => {
     });
     try {
       const response = await axios.post(
-        `${process.env.VITE_BACK_API_URL}/upload`,
+        `${import.meta.env.VITE_BACK_API_URL}/upload`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
