@@ -12,5 +12,5 @@ steps:
     - '--platform=managed'
     - '--allow-unauthenticated'
     - '--image=gcr.io/buho-421304/git-deploy/front:$SHORT_SHA'
-    - '--set-env-vars'
+  env:
     - 'VITE_BACK_API_URL=${_VITE_BACK_API_URL}'
