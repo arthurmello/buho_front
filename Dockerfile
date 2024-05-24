@@ -15,7 +15,7 @@ COPY . .
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 
 # # Set up backend URL
-# ARG VITE_BACK_API_URL=${_VITE_BACK_API_URL}
+ARG VITE_BACK_API_URL
 
 # Install 'serve', a static file serving package globally in the container
 RUN npm install -g serve
