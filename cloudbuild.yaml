@@ -4,7 +4,6 @@ steps:
   - 'build'
   - '-t'
   - 'gcr.io/buho-421304/git-deploy/front:$SHORT_SHA'
-  - '--build-arg=VITE_BACK_API_URL=${_VITE_BACK_API_URL}'
   - '-f'
   - 'Dockerfile.${_ENV}'
   - '.'
