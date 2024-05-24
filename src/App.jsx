@@ -15,6 +15,7 @@ import { MdOutlineArrowLeft, MdOutlineArrowRight } from "react-icons/md";
 import NewDeal from "./components/NewDeal/NewDeal";
 import Modal from "./components/Modal/Modal";
 import QuestionForm from "./components/QuestionForm/QuestionForm";
+require('dotenv').config()
 
 function App() {
   const [text, setText] = useState("");
