@@ -15,6 +15,7 @@ import { MdOutlineArrowLeft, MdOutlineArrowRight } from "react-icons/md";
 import NewDeal from "./components/NewDeal/NewDeal";
 import Modal from "./components/Modal/Modal";
 import QuestionForm from "./components/QuestionForm/QuestionForm";
+import ReactMarkdown from 'react-markdown';
 
 function App() {
   const [text, setText] = useState("");
@@ -236,7 +237,7 @@ function App() {
                       </div>
                       <div style={{ whiteSpace: 'pre-wrap' }}>
                         <p className="role-title">Analyst</p>
-                        <p>{chatMsg.answer}</p>
+                        <ReactMarkdown>{chatMsg.answer}</ReactMarkdown>
                       </div>
                     </li>
                   </>
