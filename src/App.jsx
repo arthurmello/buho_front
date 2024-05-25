@@ -121,6 +121,7 @@ function App() {
           const updatedQas = [...qa];
           const lastElement = updatedQas[updatedQas.length - 1];
           lastElement.answer = data.answer;
+          lastElement.sources = data.sources; // Ensure the sources are added to the state
           return updatedQas;
         });
         setOwner("User");
@@ -164,6 +165,25 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const SourceDocuments = ({ sources }) => {
+    const formattedSources = `
+\n &nbsp;
+### Sources
+\n &nbsp;
+
+${sources.map(doc => `
+> _"... ${doc.page_content} ..."_
+\n > **File**: ${doc.file}
+\n > **Page**: ${doc.page}
+\n &nbsp;
+`).join('\n --- \n')}
+`;
+if (sources.length > 0){
+  return <ReactMarkdown>{formattedSources}</ReactMarkdown>;;
+} 
+  
+  };
 
   return (
     <>
@@ -237,7 +257,8 @@ function App() {
                       </div>
                       <div>
                         <p className="role-title">Analyst</p>
-                        <ReactMarkdown>{chatMsg.answer}</ReactMarkdown>
+                        <p>{chatMsg.answer}</p>
+                        {chatMsg.sources && <SourceDocuments sources={chatMsg.sources} />}
                       </div>
                     </li>
                   </>
