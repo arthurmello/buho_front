@@ -234,7 +234,7 @@ function App() {
                       <div>
                         <BiMoney size={28.8} />
                       </div>
-                      <div>
+                      <div style={{ whiteSpace: 'pre-wrap' }}>
                         <p className="role-title">Analyst</p>
                         <p>{chatMsg.answer}</p>
                       </div>
