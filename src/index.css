@@ -82,6 +82,7 @@ button {
   border-radius: 0.3rem;
   border: 0.05rem solid rgba(255, 255, 255, 0.5);
   cursor: pointer;
+  margin-bottom: 0.2rem;
 }
 
 .sidebar-header:hover {
