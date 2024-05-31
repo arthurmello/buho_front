@@ -158,7 +158,8 @@ button {
 }
 
 .sidebar-info-upgrade,
-.sidebar-info-user {
+.sidebar-info-user,
+.sidebar-info-clearchat {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -167,7 +168,8 @@ button {
 
 .sidebar li:hover,
 .sidebar-info-upgrade:hover,
-.sidebar-info-user:hover {
+.sidebar-info-user:hover,
+.sidebar-info-clearchat:hover {
   background-color: #343541;
   border-radius: 0.3rem;
   cursor: pointer;

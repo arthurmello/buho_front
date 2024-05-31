@@ -29,7 +29,7 @@
     border-radius: 0.3rem;
   }
 
-
+/* 
   .cost{
     display: flex;
     align-items: center;
@@ -37,4 +37,9 @@
     gap: 0.5rem;
     margin-top: 1rem;
     padding-left: 3px;
+  } */
+
+  .rowC{
+    display:flex;
+    flex-direction:row;
   }

@@ -1,24 +1,29 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import axios from "axios";
 import styles from "./NewDeal.module.css";
-import { BiPlus, BiCheck } from "react-icons/bi";
+import { BiPlus, BiCheck, BiSolidTrash } from "react-icons/bi";
 import Loader from "../Loader/Loader";
 
 const NewDeal = ({ onNewDeal }) => {
   const inputRef = useRef();
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [fileLimit, setFileLimit] = useState(false);
   const [processStatus, setProcessStatus] = useState("pending");
-  const [cost, setCost] = useState(0);
   const [isLoading, setLoading] = useState(false);
 
-  const reset = () => {
-    setUploadedFiles([]);
-    setCost(0);
-    onNewDeal();
-    setFileLimit(false);
-    setProcessStatus("pending");
-  };
+  const fetchUploadedFiles = useCallback(async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/files/list`);
+      const data = await response.json();
+      console.log(data);
+      setUploadedFiles(data || []);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+  
+  useEffect(() => {
+    fetchUploadedFiles();
+  }, [fetchUploadedFiles]);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -35,7 +40,6 @@ const NewDeal = ({ onNewDeal }) => {
         }
       );
       console.log(response.data);
-      setCost(response.data.cost ?? 0);
       setProcessStatus("submitted");
     } catch (error) {
       console.error("Failed to submit files.", error);
@@ -47,54 +51,53 @@ const NewDeal = ({ onNewDeal }) => {
   const handleFileEvent = (e) => {
     e.preventDefault();
     const files = Array.prototype.slice.call(e.target.files);
-    if (files.length > 5) {
-      setFileLimit(true);
-      return;
-    }
     setUploadedFiles(files);
     setProcessStatus("uploading");
     inputRef.current.value = null;
   };
 
+  const resetUploadedFiles = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/files/reset`);
+      await response.json();
+      setUploadedFiles([]);
+      setProcessStatus("pending"); // Reset process status to allow confirm button to reappear
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <Loader show={isLoading} />
-      <div>
-        {/* <div
-          className={styles.sidebarHeader}
-          onClick={reset}
-          role="button"
-          style={{ display: processStatus === "submitted" ? "flex" : "none" }}
-        >
-          <BiReset size={20} />
-          <button>start a New Deal</button>
-        </div> */}
-        <div
-          className={styles.sidebarHeader}
-          onClick={() => inputRef.current.click()}
-          role="button"
-          style={{ display: processStatus === "pending" ? "flex" : "none" }}
-        >
-          <BiPlus size={20} />
-          <button>New Deal</button>
-          <input
-            ref={inputRef}
-            type="file"
-            multiple
-            accept=".pdf, .txt, .docx"
-            style={{ display: "none" }}
-            onChange={handleFileEvent}
-            disabled={fileLimit}
-          />
-        </div>
-        <div
-          className={styles.sidebarHeader}
-          onClick={handleSubmit}
-          role="button"
-          style={{ display: processStatus === "uploading" ? "flex" : "none" }}
-        >
-          <BiCheck size={20} />
-          <button>Confirm</button>
+      <div className={styles.container}>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <div
+            className={styles.sidebarHeader}
+            onClick={() => inputRef.current.click()}
+            role="button"
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <BiPlus size={20} />
+            <button>New Deal</button>
+            <input
+              ref={inputRef}
+              type="file"
+              multiple
+              accept=".pdf, .txt, .docx"
+              style={{ display: "none" }}
+              onChange={handleFileEvent}
+            />
+          </div>
+          <div
+            className={styles.sidebarHeader}
+            onClick={resetUploadedFiles}
+            role="button"
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <BiSolidTrash size={20} />
+            <button>Clear files</button>
+          </div>
         </div>
         <div className={styles.uploadedFilesList}>
           {uploadedFiles.map((file) => (
@@ -120,12 +123,20 @@ const NewDeal = ({ onNewDeal }) => {
             </div>
           ))}
         </div>
-        <div
-          className={styles.cost}
-          style={{ display: cost ? "flex" : "none" }}
-        >
-          Cost: {cost.toFixed(7)} USD
-        </div>
+        {uploadedFiles.length > 0 && processStatus !== "submitted" && (
+          <div
+            className={`${styles.sidebarHeader}`}
+            onClick={handleSubmit}
+            role="button"
+            style={{
+              display: "flex",
+              marginTop: "20px"
+            }}
+          >
+            <BiCheck size={20} />
+            <button>Confirm</button>
+          </div>
+        )}
       </div>
     </>
   );

@@ -80,6 +80,16 @@ function App() {
     }
   };
 
+  const resetQas = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas/reset`);
+      await response.json();
+      setQas([]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const toggleSidebar = useCallback(() => {
     setIsShowSidebar((prev) => !prev);
   }, []);
@@ -234,9 +244,18 @@ ${sources.map(doc => `
               <BiUser size={20} />
               <p>Upgrade plan</p>
             </div> */}
+
             <div className="sidebar-info-user">
               <BiSolidUserCircle size={20} />
               <p>User</p>
+            </div>
+
+            <div
+            className="sidebar-info-clearchat"
+            onClick={() => resetQas()}
+            role="button">
+                <BiSolidTrash size={20} />
+                <p>Clear chat</p>
             </div>
           </div>
         </section>
@@ -326,7 +345,7 @@ ${sources.map(doc => `
 
         <section className={`sidebar ${isShowQuestionsSidebar ? "open" : ""}`}>
           <div className="sidebar-header" role="button">
-            <button>Q&A Tracker</button>
+            <p>Q&A Tracker</p>
           </div>
           <div className="sidebar-history">
             {qasTracker.map((history, index) => {
