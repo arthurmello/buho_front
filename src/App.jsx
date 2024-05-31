@@ -10,6 +10,7 @@ import {
   BiSend,
   BiSolidUserCircle,
   BiMoney,
+  BiSolidTrash,
 } from "react-icons/bi";
 import { MdOutlineArrowLeft, MdOutlineArrowRight } from "react-icons/md";
 import NewDeal from "./components/NewDeal/NewDeal";
@@ -29,21 +30,57 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const scrollToLastItem = useRef(null);
 
-  useEffect(() => {
-    const fetchQas = async () => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas`);
-        const data = await response.json();
-        setQas(data.qas);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchQas();
+  const fetchQas = useCallback(async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas`);
+      const data = await response.json();
+      setQas(data.qas || []);
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
+
+  const fetchQasTracker = useCallback(async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas_tracker`);
+      const data = await response.json();
+      console.log(data);
+      setQasTracker(data.qas_tracker || []);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchQas();
+  }, [fetchQas]);
+
+  useEffect(() => {
+    fetchQasTracker();
+  }, [fetchQasTracker]);
 
   const reset = async () => {
     setText("");
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas/reset`);
+      await response.json();
+      setQas([]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const resetQaTracker = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas_tracker/reset`);
+      await response.json();
+      setQasTracker([]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const resetQas = async () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas/reset`);
       await response.json();
@@ -142,15 +179,26 @@ function App() {
     }
   };
 
-  const onQuestionSubmitted = ({ question, owner }) => {
+  const onQuestionSubmitted = async ({ question, owner }) => {
     setShowModal(false);
-    setQasTracker((history) => [
-      ...history,
-      {
-        question,
-        owner,
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    ]);
+      body: JSON.stringify({
+        owner,
+        question,
+      }),
+    };
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas_tracker/add`, options);
+      const data = await response.json();
+      console.log(data);
+      fetchQasTracker(); // Fetch the updated QA tracker after a new question is added
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useLayoutEffect(() => {
@@ -179,10 +227,10 @@ ${sources.map(doc => `
 \n &nbsp;
 `).join('\n --- \n')}
 `;
-if (sources.length > 0){
-  return <ReactMarkdown>{formattedSources}</ReactMarkdown>;;
-} 
-  
+    if (sources.length > 0) {
+      return <ReactMarkdown>{formattedSources}</ReactMarkdown>;
+    }
+    return null;
   };
 
   return (
@@ -196,9 +244,18 @@ if (sources.length > 0){
               <BiUser size={20} />
               <p>Upgrade plan</p>
             </div> */}
+
             <div className="sidebar-info-user">
               <BiSolidUserCircle size={20} />
               <p>User</p>
+            </div>
+
+            <div
+            className="sidebar-info-clearchat"
+            onClick={() => resetQas()}
+            role="button">
+                <BiSolidTrash size={20} />
+                <p>Clear chat</p>
             </div>
           </div>
         </section>
@@ -288,23 +345,23 @@ if (sources.length > 0){
 
         <section className={`sidebar ${isShowQuestionsSidebar ? "open" : ""}`}>
           <div className="sidebar-header" role="button">
-            <button>Q&A Tracker</button>
+            <p>Q&A Tracker</p>
           </div>
           <div className="sidebar-history">
-            {qasTracker.map(({ question, owner }, index) => {
+            {qasTracker.map((history, index) => {
               return (
                 <div
                   className="question-box"
                   onClick={() => {
-                    setOwner(owner);
-                    setText(question);
+                    setOwner(history.owner);
+                    setText(history.question);
                   }}
                   key={index}
                 >
                   <p className="question-owner">
-                    {index + 1}. Question asked by: {owner}
+                    {index + 1}. Question asked by: {history.owner}
                   </p>
-                  <p className="question-text">{question}</p>
+                  <p className="question-text">{history.question}</p>
                 </div>
               );
             })}
@@ -317,6 +374,14 @@ if (sources.length > 0){
             >
               <BiPlus size={20} />
               <button>Add Question</button>
+            </div>
+            <div
+              className="sidebar-header"
+              onClick={() => resetQaTracker()}
+              role="button"
+            >
+              <BiSolidTrash size={20} />
+              <button>Clear Q&A Tracker</button>
             </div>
           </div>
 
