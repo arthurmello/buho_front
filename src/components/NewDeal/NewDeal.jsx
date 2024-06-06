@@ -138,6 +138,13 @@ const NewDeal = ({ onNewDeal }) => {
           </div>
         )}
       </div>
+
+        {uploadedFiles.length > 0 && processStatus === "submitted" && (
+          <div>
+            <p>Files uploaded successfully!</p>
+          </div>
+        )}
+
     </>
   );
 };
