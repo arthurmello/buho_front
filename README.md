@@ -1,6 +1,6 @@
-# React ChatGPT Clone
+# Buho
 
-The ChatGPT clone uses chat completion v1 API with your gpt model and express.js to run a server requesting client-side requests.
+RAG tool for investment bankers.
 
 ## Screenshots
 
