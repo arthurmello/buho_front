@@ -4,7 +4,7 @@ import styles from "./NewDeal.module.css";
 import { BiPlus, BiCheck, BiSolidTrash } from "react-icons/bi";
 import Loader from "../Loader/Loader";
 
-const NewDeal = ({ onNewDeal }) => {
+const NewDeal = () => {
   const inputRef = useRef();
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [processStatus, setProcessStatus] = useState("pending");
@@ -12,7 +12,7 @@ const NewDeal = ({ onNewDeal }) => {
 
   const fetchUploadedFiles = useCallback(async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/files/list`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/files`);
       const data = await response.json();
       console.log(data);
       setUploadedFiles(data || []);
@@ -33,7 +33,7 @@ const NewDeal = ({ onNewDeal }) => {
     });
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACK_API_URL}/upload`,
+        `${import.meta.env.VITE_BACK_API_URL}/files/upload`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
