@@ -20,8 +20,8 @@ import ReactMarkdown from 'react-markdown';
 
 function App() {
   const [text, setText] = useState("");
-  const [qas, setQas] = useState([]);
-  const [qasTracker, setQasTracker] = useState([]);
+  const [chatHistory, setChatHistory] = useState([]);
+  const [qaTracker, setQaTracker] = useState([]);
   const [isResponseLoading, setIsResponseLoading] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [isShowSidebar, setIsShowSidebar] = useState(false);
@@ -30,41 +30,41 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const scrollToLastItem = useRef(null);
 
-  const fetchQas = useCallback(async () => {
+  const fetchChatHistory = useCallback(async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/chat/history`);
       const data = await response.json();
-      setQas(data.qas || []);
+      setChatHistory(data.chat_history || []);
     } catch (error) {
       console.error(error);
     }
   }, []);
 
-  const fetchQasTracker = useCallback(async () => {
+  const fetchQaTracker = useCallback(async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas_tracker`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qa_tracker`);
       const data = await response.json();
       console.log(data);
-      setQasTracker(data.qas_tracker || []);
+      setQaTracker(data.qa_tracker || []);
     } catch (error) {
       console.error(error);
     }
   }, []);
 
   useEffect(() => {
-    fetchQas();
-  }, [fetchQas]);
+    fetchChatHistory();
+  }, [fetchChatHistory]);
 
   useEffect(() => {
-    fetchQasTracker();
-  }, [fetchQasTracker]);
+    fetchQaTracker();
+  }, [fetchQaTracker]);
 
   const reset = async () => {
     setText("");
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas/reset`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/chat/history/reset`);
       await response.json();
-      setQas([]);
+      setChatHistory([]);
     } catch (error) {
       console.error(error);
     }
@@ -72,19 +72,19 @@ function App() {
 
   const resetQaTracker = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas_tracker/reset`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qa_tracker/reset`);
       await response.json();
-      setQasTracker([]);
+      setQaTracker([]);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const resetQas = async () => {
+  const resetChatHistory = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas/reset`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/chat/history/reset`);
       await response.json();
-      setQas([]);
+      setChatHistory([]);
     } catch (error) {
       console.error(error);
     }
@@ -102,8 +102,8 @@ function App() {
     e.preventDefault();
     if (!text) return;
 
-    setQas((qa) => [
-      ...qa,
+    setChatHistory((msg) => [
+      ...msg,
       {
         question: text,
         answer: "loading",
@@ -127,7 +127,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACK_API_URL}/ask`,
+        `${import.meta.env.VITE_BACK_API_URL}/chat/ask`,
         options
       );
 
@@ -141,11 +141,11 @@ function App() {
 
       if (data.error) {
         setErrorText(data.error);
-        setQas((qa) => {
-          const updatedQas = [...qa];
-          const lastElement = updatedQas[updatedQas.length - 1];
+        setChatHistory((msg) => {
+          const updatedChatHistory = [...msg];
+          const lastElement = updatedChatHistory[updatedChatHistory.length - 1];
           lastElement.answer = data.error;
-          return updatedQas;
+          return updatedChatHistory;
         });
         setText("");
       } else {
@@ -154,12 +154,12 @@ function App() {
 
       if (!data.error) {
         setErrorText("");
-        setQas((qa) => {
-          const updatedQas = [...qa];
-          const lastElement = updatedQas[updatedQas.length - 1];
+        setChatHistory((msg) => {
+          const updatedChatHistory = [...msg];
+          const lastElement = updatedChatHistory[updatedChatHistory.length - 1];
           lastElement.answer = data.answer;
           lastElement.sources = data.sources; // Ensure the sources are added to the state
-          return updatedQas;
+          return updatedChatHistory;
         });
         setOwner("User");
         setTimeout(() => {
@@ -192,10 +192,10 @@ function App() {
       }),
     };
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qas_tracker/add`, options);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qa_tracker/add`, options);
       const data = await response.json();
       console.log(data);
-      fetchQasTracker(); // Fetch the updated QA tracker after a new question is added
+      fetchQaTracker(); // Fetch the updated QA tracker after a new question is added
     } catch (error) {
       console.error(error);
     }
@@ -237,13 +237,9 @@ ${sources.map(doc => `
     <>
       <div className="container">
         <section className={`sidebar ${isShowSidebar ? "open" : ""}`}>
-          <NewDeal onNewDeal={reset} />
+          <NewDeal />
 
           <div className="sidebar-info">
-            {/* <div className="sidebar-info-upgrade">
-              <BiUser size={20} />
-              <p>Upgrade plan</p>
-            </div> */}
 
             <div className="sidebar-info-user">
               <BiSolidUserCircle size={20} />
@@ -252,7 +248,7 @@ ${sources.map(doc => `
 
             <div
             className="sidebar-info-clearchat"
-            onClick={() => resetQas()}
+            onClick={() => resetChatHistory()}
             role="button">
                 <BiSolidTrash size={20} />
                 <p>Clear chat</p>
@@ -294,7 +290,7 @@ ${sources.map(doc => `
           )}
           <div className="main-header">
             <ul>
-              {qas.map((chatMsg, idx) => {
+              {chatHistory.map((chatMsg, idx) => {
                 return (
                   <>
                     <li key={idx} ref={scrollToLastItem}>
@@ -348,7 +344,7 @@ ${sources.map(doc => `
             <p>Q&A Tracker</p>
           </div>
           <div className="sidebar-history">
-            {qasTracker.map((history, index) => {
+            {qaTracker.map((history, index) => {
               return (
                 <div
                   className="question-box"
