@@ -6,9 +6,25 @@ import Loader from "../Loader/Loader";
 
 const NewDeal = () => {
   const inputRef = useRef();
+  const [allowedExtensions, setAllowedExtensions] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [processStatus, setProcessStatus] = useState("pending");
   const [isLoading, setLoading] = useState(false);
+
+
+  const fetchAllowedExtensions = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/files/allowed_extensions`);
+      const extensions = await response.json();
+      setAllowedExtensions(extensions.join(', '));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchAllowedExtensions();
+  }, []);
 
   const fetchUploadedFiles = useCallback(async () => {
     try {
@@ -84,7 +100,7 @@ const NewDeal = () => {
               ref={inputRef}
               type="file"
               multiple
-              accept=".pdf, .txt, .docx"
+              accept={allowedExtensions}
               style={{ display: "none" }}
               onChange={handleFileEvent}
             />
