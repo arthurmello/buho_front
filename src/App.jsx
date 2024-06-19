@@ -29,10 +29,12 @@ function App() {
   const [owner, setOwner] = useState("User");
   const [showModal, setShowModal] = useState(false);
   const scrollToLastItem = useRef(null);
+  const params = new URLSearchParams(location.search);
+  const userIdParam = params.get('user') ? `user_id=${params.get('user')}` : '';
 
   const fetchChatHistory = useCallback(async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/chat/history`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/chat/history?${userIdParam}`);
       const data = await response.json();
       setChatHistory(data.chat_history || []);
     } catch (error) {
@@ -42,7 +44,7 @@ function App() {
 
   const fetchQaTracker = useCallback(async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qa_tracker`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qa_tracker?${userIdParam}`);
       const data = await response.json();
       console.log(data);
       setQaTracker(data.qa_tracker || []);
@@ -62,7 +64,7 @@ function App() {
   const reset = async () => {
     setText("");
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/chat/history/reset`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/chat/history/reset?${userIdParam}`);
       await response.json();
       setChatHistory([]);
     } catch (error) {
@@ -72,7 +74,7 @@ function App() {
 
   const resetQaTracker = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qa_tracker/reset`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qa_tracker/reset?${userIdParam}`);
       await response.json();
       setQaTracker([]);
     } catch (error) {
@@ -82,7 +84,7 @@ function App() {
 
   const resetChatHistory = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/chat/history/reset`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/chat/history/reset?${userIdParam}`);
       await response.json();
       setChatHistory([]);
     } catch (error) {
@@ -127,7 +129,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACK_API_URL}/chat/ask`,
+        `${import.meta.env.VITE_BACK_API_URL}/chat/ask?${userIdParam}`,
         options
       );
 
@@ -192,7 +194,7 @@ function App() {
       }),
     };
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qa_tracker/add`, options);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qa_tracker/add?${userIdParam}`, options);
       const data = await response.json();
       console.log(data);
       fetchQaTracker(); // Fetch the updated QA tracker after a new question is added
@@ -237,7 +239,7 @@ ${sources.map(doc => `
     <>
       <div className="container">
         <section className={`sidebar ${isShowSidebar ? "open" : ""}`}>
-          <NewDeal />
+          <NewDeal userIdParam={userIdParam}/>
 
           <div className="sidebar-info">
 

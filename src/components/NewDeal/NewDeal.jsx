@@ -4,7 +4,7 @@ import styles from "./NewDeal.module.css";
 import { BiPlus, BiCheck, BiSolidTrash } from "react-icons/bi";
 import Loader from "../Loader/Loader";
 
-const NewDeal = () => {
+const NewDeal = ({ userIdParam }) => {
   const inputRef = useRef();
   const [allowedExtensions, setAllowedExtensions] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -28,7 +28,7 @@ const NewDeal = () => {
 
   const fetchUploadedFiles = useCallback(async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/files`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/files?${userIdParam}`);
       const data = await response.json();
       console.log(data);
       setUploadedFiles(data || []);
@@ -49,7 +49,7 @@ const NewDeal = () => {
     });
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACK_API_URL}/files/upload`,
+        `${import.meta.env.VITE_BACK_API_URL}/files/upload?${userIdParam}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -74,7 +74,7 @@ const NewDeal = () => {
 
   const resetUploadedFiles = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/files/reset`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/files/reset?${userIdParam}`);
       await response.json();
       setUploadedFiles([]);
       setProcessStatus("pending"); // Reset process status to allow confirm button to reappear
