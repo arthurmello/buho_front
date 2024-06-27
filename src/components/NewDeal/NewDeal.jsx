@@ -14,7 +14,7 @@ const NewDeal = ({ userIdParam }) => {
 
   const fetchAllowedExtensions = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/files/allowed_extensions`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/input_files/allowed_extensions`);
       const extensions = await response.json();
       setAllowedExtensions(extensions.join(', '));
     } catch (error) {
@@ -28,7 +28,7 @@ const NewDeal = ({ userIdParam }) => {
 
   const fetchUploadedFiles = useCallback(async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/files?${userIdParam}`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/input_files?${userIdParam}`);
       const data = await response.json();
       console.log(data);
       setUploadedFiles(data || []);
@@ -49,7 +49,7 @@ const NewDeal = ({ userIdParam }) => {
     });
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACK_API_URL}/files/upload?${userIdParam}`,
+        `${import.meta.env.VITE_BACK_API_URL}/input_files/upload?${userIdParam}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -74,10 +74,10 @@ const NewDeal = ({ userIdParam }) => {
 
   const resetUploadedFiles = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/files/reset?${userIdParam}`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/input_files/reset?${userIdParam}`);
       await response.json();
       setUploadedFiles([]);
-      setProcessStatus("pending"); // Reset process status to allow confirm button to reappear
+      setProcessStatus("pending");
     } catch (error) {
       console.error(error);
     }

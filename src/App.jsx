@@ -14,9 +14,12 @@ import {
 } from "react-icons/bi";
 import { MdOutlineArrowLeft, MdOutlineArrowRight } from "react-icons/md";
 import NewDeal from "./components/NewDeal/NewDeal";
-import Modal from "./components/Modal/Modal";
+import QAModal from "./components/QAModal/QAModal";
 import QuestionForm from "./components/QuestionForm/QuestionForm";
 import ReactMarkdown from 'react-markdown';
+import FileGenerationModal from "./components/FileGenerationModal/FileGenerationModal";
+import GenerateFile from "./components/GenerateFile/GenerateFile";
+import Loader from "./components/Loader/Loader";
 
 function App() {
   const [text, setText] = useState("");
@@ -27,10 +30,12 @@ function App() {
   const [isShowSidebar, setIsShowSidebar] = useState(false);
   const [isShowQuestionsSidebar, setIsShowQuestionsSidebar] = useState(false);
   const [owner, setOwner] = useState("User");
-  const [showModal, setShowModal] = useState(false);
+  const [showQAModal, setShowQAModal] = useState(false);
+  const [showFileGenerationModal, setShowFileGenerationModal] = useState(false);
   const scrollToLastItem = useRef(null);
   const params = new URLSearchParams(location.search);
-  const userIdParam = params.get('user') ? `user_id=${params.get('user')}` : '';
+  const userIdParam = params.get('user') ? `user_id="${params.get('user')}"` : '';
+  const [isLoading, setLoading] = useState(false);
 
   const fetchChatHistory = useCallback(async () => {
     try {
@@ -182,7 +187,7 @@ function App() {
   };
 
   const onQuestionSubmitted = async ({ question, owner }) => {
-    setShowModal(false);
+    setShowQAModal(false);
     const options = {
       method: "POST",
       headers: {
@@ -197,10 +202,45 @@ function App() {
       const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/qa_tracker/add?${userIdParam}`, options);
       const data = await response.json();
       console.log(data);
-      fetchQaTracker(); // Fetch the updated QA tracker after a new question is added
+      fetchQaTracker();
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const onFileGenerationRequested = async ({ filename }) => {
+    setShowFileGenerationModal(false);
+    setLoading(true);
+    console.log(filename);
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        filename,
+      }),
+    };
+    console.log(options);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/output_files/generate?${userIdParam}`, options);
+      const blob = await response.blob();
+
+      // Create a link to download the file
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${filename}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+    } catch (error) {
+      console.error(error);
+    }
+     finally {
+      setLoading(false)
+     }
   };
 
   useLayoutEffect(() => {
@@ -237,11 +277,21 @@ ${sources.map(doc => `
 
   return (
     <>
+      <Loader show={isLoading} />
       <div className="container">
         <section className={`sidebar ${isShowSidebar ? "open" : ""}`}>
           <NewDeal userIdParam={userIdParam}/>
-
+          
           <div className="sidebar-info">
+            
+            <div
+              className="sidebar-header"
+              onClick={() => setShowFileGenerationModal(true)}
+              role="button"
+            >
+              <BiPlus size={20} />
+                <p>Generate file</p>
+            </div>
 
             <div className="sidebar-info-user">
               <BiSolidUserCircle size={20} />
@@ -367,7 +417,7 @@ ${sources.map(doc => `
           <div className="sidebar-info">
             <div
               className="sidebar-header"
-              onClick={() => setShowModal(true)}
+              onClick={() => setShowQAModal(true)}
               role="button"
             >
               <BiPlus size={20} />
@@ -383,9 +433,14 @@ ${sources.map(doc => `
             </div>
           </div>
 
-          <Modal show={showModal} handleClose={() => setShowModal(false)}>
+          <QAModal show={showQAModal} handleClose={() => setShowQAModal(false)}>
             <QuestionForm onQuestionSubmit={onQuestionSubmitted} />
-          </Modal>
+          </QAModal>
+
+          <FileGenerationModal show={showFileGenerationModal} handleClose={() => setShowFileGenerationModal(false)}>
+            <GenerateFile onFileGenerationRequest={onFileGenerationRequested} />
+          </FileGenerationModal>
+          
         </section>
       </div>
     </>

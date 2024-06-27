@@ -6,7 +6,7 @@ const Loader = ({ show }) => {
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
-        <div class="loader"></div>
+        <div className="loader"></div>
       </section>
     </div>
   );
