@@ -1,6 +1,6 @@
-import "./modal.css";
+import "./qamodal.css";
 
-const Modal = ({ handleClose, show, children }) => {
+const QAModal = ({ handleClose, show, children }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
 
   return (
@@ -13,4 +13,4 @@ const Modal = ({ handleClose, show, children }) => {
   );
 };
 
-export default Modal;
+export default QAModal;

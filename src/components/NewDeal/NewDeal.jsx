@@ -4,15 +4,31 @@ import styles from "./NewDeal.module.css";
 import { BiPlus, BiCheck, BiSolidTrash } from "react-icons/bi";
 import Loader from "../Loader/Loader";
 
-const NewDeal = () => {
+const NewDeal = ({ userIdParam }) => {
   const inputRef = useRef();
+  const [allowedExtensions, setAllowedExtensions] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [processStatus, setProcessStatus] = useState("pending");
   const [isLoading, setLoading] = useState(false);
 
+
+  const fetchAllowedExtensions = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/input_files/allowed_extensions`);
+      const extensions = await response.json();
+      setAllowedExtensions(extensions.join(', '));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchAllowedExtensions();
+  }, []);
+
   const fetchUploadedFiles = useCallback(async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/files`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/input_files?${userIdParam}`);
       const data = await response.json();
       console.log(data);
       setUploadedFiles(data || []);
@@ -33,7 +49,7 @@ const NewDeal = () => {
     });
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACK_API_URL}/files/upload`,
+        `${import.meta.env.VITE_BACK_API_URL}/input_files/upload?${userIdParam}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -58,10 +74,10 @@ const NewDeal = () => {
 
   const resetUploadedFiles = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/files/reset`);
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/input_files/reset?${userIdParam}`);
       await response.json();
       setUploadedFiles([]);
-      setProcessStatus("pending"); // Reset process status to allow confirm button to reappear
+      setProcessStatus("pending");
     } catch (error) {
       console.error(error);
     }
@@ -84,7 +100,7 @@ const NewDeal = () => {
               ref={inputRef}
               type="file"
               multiple
-              accept=".pdf, .txt, .docx"
+              accept={allowedExtensions}
               style={{ display: "none" }}
               onChange={handleFileEvent}
             />
