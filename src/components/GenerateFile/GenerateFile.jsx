@@ -3,7 +3,7 @@ import "./GenerateFile.css";
 
 const GenerateFile = ({ onFileGenerationRequest }) => {
 
-  const filenames = ["Information Memorandum", "Credit Proposal"];
+  const filenames = ["Information Memorandum", "Credit Report"];
 
   const formatFilename = (filename) => {
     console.log(filename)
