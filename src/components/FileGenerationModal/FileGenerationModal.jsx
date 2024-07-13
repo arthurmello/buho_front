@@ -1,3 +1,4 @@
+import React  from "react";
 import "./filegenerationmodal.css";
 
 const FileGenerationModal = ({ handleClose, show, children }) => {

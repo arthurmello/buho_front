@@ -1,3 +1,4 @@
+import React  from "react";
 import "./qamodal.css";
 
 const QAModal = ({ handleClose, show, children }) => {

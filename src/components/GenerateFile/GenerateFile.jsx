@@ -1,12 +1,30 @@
-import React, { useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import "./GenerateFile.css";
 
 const GenerateFile = ({ onFileGenerationRequest }) => {
 
-  const filenames = ["Information Memorandum", "Credit Report"];
+  const [fileNames, setFileNames] = useState([]);
+
+  const cleanFileNames = (fileName) => {
+    let cleanFileName = fileName.replace("_"," ");
+    return cleanFileName.charAt(0).toUpperCase() + cleanFileName.slice(1);
+  }
+
+  const fetchFileNames = useCallback(async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/output_files/`);
+      const data = await response.json();
+      setFileNames(data.map(cleanFileNames));
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchFileNames();
+  }, [fetchFileNames]);
 
   const formatFilename = (filename) => {
-    console.log(filename)
     return filename.toLowerCase().replace(/ /g, "_");
   };
 
@@ -17,7 +35,7 @@ const GenerateFile = ({ onFileGenerationRequest }) => {
 
   return (
     <form className="form">
-      {filenames.map((filename, index) => (
+      {fileNames.map((filename, index) => (
         <button
           key={index}
           type="button"

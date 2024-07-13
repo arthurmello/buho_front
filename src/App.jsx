@@ -1,4 +1,5 @@
 import {
+  React,
   useState,
   useEffect,
   useRef,
@@ -34,9 +35,8 @@ function App() {
   const [showFileGenerationModal, setShowFileGenerationModal] = useState(false);
   const scrollToLastItem = useRef(null);
   const params = new URLSearchParams(location.search);
-  const userIdParam = params.get('user') ? `user_id="${params.get('user')}"` : '';
+  const userIdParam = params.get('user') ? `user_id=${params.get('user')}` : '';
   const [isLoading, setLoading] = useState(false);
-
   const fetchChatHistory = useCallback(async () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/chat/history?${userIdParam}`);
@@ -65,17 +65,6 @@ function App() {
   useEffect(() => {
     fetchQaTracker();
   }, [fetchQaTracker]);
-
-  const reset = async () => {
-    setText("");
-    try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/chat/history/reset?${userIdParam}`);
-      await response.json();
-      setChatHistory([]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const resetQaTracker = async () => {
     try {
