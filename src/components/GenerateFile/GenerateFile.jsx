@@ -6,7 +6,7 @@ const GenerateFile = ({ onFileGenerationRequest }) => {
   const [fileNames, setFileNames] = useState([]);
 
   const cleanFileNames = (fileName) => {
-    let cleanFileName = fileName.replace("_"," ");
+    let cleanFileName = fileName.replaceAll("_"," ");
     return cleanFileName.charAt(0).toUpperCase() + cleanFileName.slice(1);
   }
 
