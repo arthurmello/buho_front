@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
-import "./GenerateFile.css";
+import "./generatefile.css";
 
 const GenerateFile = ({ onFileGenerationRequest }) => {
 
