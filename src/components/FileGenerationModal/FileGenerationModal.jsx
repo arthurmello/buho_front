@@ -1,5 +1,5 @@
 import React  from "react";
-import "./filegenerationmodal.css";
+import "./FileGenerationModal.css";
 
 const FileGenerationModal = ({ handleClose, show, children }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";

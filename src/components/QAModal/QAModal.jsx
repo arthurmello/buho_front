@@ -1,5 +1,5 @@
 import React  from "react";
-import "./qamodal.css";
+import "./QAModal.css";
 
 const QAModal = ({ handleClose, show, children }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
