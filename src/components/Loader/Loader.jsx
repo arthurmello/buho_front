@@ -1,5 +1,5 @@
 import React  from "react";
-import "./loader.css";
+import "./Loader.css";
 
 const Loader = ({ show }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
