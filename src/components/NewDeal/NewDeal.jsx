@@ -1,6 +1,6 @@
 import React, { useRef, useState, useCallback, useEffect } from "react";
 import axios from "axios";
-import styles from "./NewDeal.module.css";
+import styles from "./newdeal.module.css";
 import { BiPlus, BiCheck, BiSolidTrash } from "react-icons/bi";
 import Loader from "../Loader/Loader";
 
