@@ -8,6 +8,7 @@
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  background-color: #2b2c2f;
 }
 
 .form-input{
@@ -25,28 +26,15 @@
   margin-bottom: 10px;
 }
 
-.question {
-    width: 100%;
-    height: 150px;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #3d3f4c;
-    font-size: 16px;
-    resize: none;
-    color: white;
-  }
-
-  .owner{
-    width: 100%;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #3d3f4c;
-    font-size: 16px;
-    color: white;
+.deal {
+  width: 100%;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #3d3f4c;
+  font-size: 16px;
+  color: white;
   }
 
   .btn {

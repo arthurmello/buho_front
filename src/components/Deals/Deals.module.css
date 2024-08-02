@@ -1,0 +1,64 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the contents horizontally */
+  padding: 1rem;
+}
+
+.sidebarHeader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 0.3rem;
+    border: 0.05rem solid rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+  }
+  
+.sidebarHeader:hover {
+  background-color: #2b2c2f;
+}
+
+.dealList{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.deal {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+  cursor: pointer;
+  position: relative; /* Add this line */
+}
+
+.deal:hover {
+  background-color: #2b2c2f;
+}
+
+.trashIcon {
+  margin-left: auto; /* Push the trash icon to the right */
+  visibility: hidden; /* Initially hide the trash icon */
+  cursor: pointer;
+}
+
+.deal:hover .trashIcon {
+  visibility: visible; /* Show the trash icon on hover */
+}
+
+.rowC{
+  display:flex;
+  flex-direction:row;
+}
+
+.selectedDeal {
+  background-color: #2b2c2f;
+}

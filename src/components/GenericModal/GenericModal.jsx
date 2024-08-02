@@ -1,7 +1,7 @@
 import React  from "react";
-import "./QAModal.css";
+import "./genericmodal.css";
 
-const QAModal = ({ handleClose, show, children }) => {
+const GenericModal = ({ handleClose, show, children }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
 
   return (
@@ -14,4 +14,4 @@ const QAModal = ({ handleClose, show, children }) => {
   );
 };
 
-export default QAModal;
+export default GenericModal;

@@ -29,7 +29,7 @@
   display: none;
 }
 
-/* Loader with static $ symbol */
+/* Loader with static $ icon */
 .loader {
   display: inline-block;
   width: 50px;
