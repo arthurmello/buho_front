@@ -24,14 +24,3 @@
   .display-none {
     display: none;
   }
-
-  .close{
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 10px;
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
-    font-size: 2rem;
-  }
