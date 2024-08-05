@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "./QuestionForm.css";
 
-const QuestionForm = ({ onQuestionSubmit }) => {
+const QuestionForm = ({ onQuestionSubmit, owner, setOwner }) => {
   const [question, setQuestion] = useState("");
-  const [owner, setOwner] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
