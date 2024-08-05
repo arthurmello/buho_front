@@ -1,7 +1,6 @@
 export const onFileGenerationRequested = async ({ filename, setShowFileGenerationModal, setLoading, userIdParam, dealParam }) => {
     setShowFileGenerationModal(false);
     setLoading(true);
-    console.log(filename);
   
     try {
       // Fetch user parameters
@@ -48,7 +47,6 @@ export const onFileGenerationRequested = async ({ filename, setShowFileGeneratio
           user_parameters,
         }),
       };
-      console.log(options);
       const response = await fetch(`${import.meta.env.VITE_BACK_API_URL}/output_files/generate?${userIdParam}&${dealParam}`, options);
       const blob = await response.blob();
   

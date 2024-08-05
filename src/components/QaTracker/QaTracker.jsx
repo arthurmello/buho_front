@@ -4,7 +4,16 @@ import { resetQaTracker, fetchQaTracker,  onQuestionSubmitted } from "../../api/
 import GenericModal from "../GenericModal/GenericModal";
 import QuestionForm from "../QuestionForm/QuestionForm";
 
-const QaTracker = ({ userIdParam, dealParam, qaTracker, setQaTracker, isShowQuestionsSidebar, setText, owner, setOwner }) => {
+const QaTracker = ({
+    userIdParam,
+    dealParam,
+    qaTracker,
+    setQaTracker,
+    isShowQuestionsSidebar,
+    setText,
+    owner,
+    setOwner
+}) => {
     const [showQAModal, setShowQAModal] = useState(false);
 
     useEffect(() => {
@@ -37,14 +46,22 @@ const QaTracker = ({ userIdParam, dealParam, qaTracker, setQaTracker, isShowQues
                 <BiPlus size={20} />
                 <button>Add Question</button>
             </div>
-            <div className="sidebar-header" onClick={() => resetQaTracker(userIdParam, dealParam, setQaTracker)} role="button">
+            <div className="sidebar-header"
+                onClick={() => resetQaTracker(userIdParam, dealParam, setQaTracker)} role="button">
                 <BiSolidTrash size={20} />
                 <button>Clear Q&A Tracker</button>
             </div>
             </div>
 
             <GenericModal show={showQAModal} handleClose={() => setShowQAModal(false)}>
-            <QuestionForm onQuestionSubmit={(data) => onQuestionSubmitted(data, userIdParam, dealParam, setQaTracker, fetchQaTracker, setShowQAModal)} owner={owner} setOwner={setOwner}/>
+            <QuestionForm
+                onQuestionSubmit={
+                    (data) => onQuestionSubmitted(
+                        data, userIdParam, dealParam, setQaTracker, fetchQaTracker, setShowQAModal
+                    )} 
+                owner={owner}
+                setOwner={setOwner}
+            />
             </GenericModal>
             </section>
         </>

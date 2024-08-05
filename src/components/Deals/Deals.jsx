@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { BiPlus, BiCheck, BiSolidTrash , BiFolder} from "react-icons/bi";
+import React, { useEffect } from "react";
+import { BiPlus, BiSolidTrash , BiFolder} from "react-icons/bi";
 import styles from "./Deals.module.css";
 import { deleteDeal, fetchDeals } from "../../api/deals"
 
-const Deals = ({ userIdParam, setShowNewDealModal, deals, setDeals, selectedDeal, setSelectedDeal}) => {
-  console.log(deals)
+const Deals = ({ userIdParam, setShowNewDealModal, deals, setDeals, setSelectedDeal}) => {
     useEffect(() => {
     fetchDeals(userIdParam, setDeals);
   }, [userIdParam]);
   
-  const [uploadedFiles, setUploadedFiles] = useState([]);
   
   async function handleDelete(userIdParam, deal) {
     console.log(`Deleting deal: ${deal} for user ${userIdParam}`);
@@ -20,9 +18,6 @@ const Deals = ({ userIdParam, setShowNewDealModal, deals, setDeals, selectedDeal
   async function handleClick(userIdParam, deal) {
     console.log(`Selecting deal: ${deal} for user ${userIdParam}`);
     setSelectedDeal(deal)
-    console.log("selected deal at Deals:")
-    console.log(selectedDeal)
-    console.log(typeof selectedDeal)
   }
 
   return (
@@ -33,20 +28,11 @@ const Deals = ({ userIdParam, setShowNewDealModal, deals, setDeals, selectedDeal
               <BiPlus size={20} />
               <p>New Deal</p>
           </div>
-          {/* <div
-            className={styles.sidebarHeader}
-            onClick={handleReset}
-            role="button"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <BiSolidTrash size={20} />
-            <button>Clear files</button>
-          </div> */}
         </div>
         <div className={styles.dealList}>
           {deals.map((deal) => (
             <div
-              className={`${styles.deal} ${deal === selectedDeal ? styles.selectedDeal : ''}`}
+              className={styles.deal}
               key={deal}
               onClick={() => handleClick(userIdParam, deal)}>
               <BiFolder />
@@ -58,40 +44,9 @@ const Deals = ({ userIdParam, setShowNewDealModal, deals, setDeals, selectedDeal
                   handleDelete(userIdParam, deal);
                 }}
               />
-              {/* <button
-                style={{
-                  marginLeft: "10px",
-                  display: processStatus === "uploading" ? "block" : "none",
-                }}
-                onClick={() => {
-                  const files = uploadedFiles.filter(
-                    (item) => item !== deal
-                  );
-                  setUploadedFiles(files);
-                  if (!files.length) {
-                    setProcessStatus("pending");
-                  }
-                }}
-              >
-                X
-              </button> */}
             </div>
           ))}
         </div>
-        {uploadedFiles.length > 0 && processStatus !== "submitted" && (
-          <div
-            className={`${styles.sidebarHeader}`}
-            onClick={handleSubmit}
-            role="button"
-            style={{
-              display: "flex",
-              marginTop: "20px"
-            }}
-          >
-            <BiCheck size={20} />
-            <button>Confirm</button>
-          </div>
-        )}
       </div>
     </>
   );

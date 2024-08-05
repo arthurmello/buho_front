@@ -35,7 +35,7 @@ function App() {
   const params = new URLSearchParams(location.search);
   const user = params.get('user') ? params.get('user') : 'user';
   const userIdParam = `user=${user}`
-  const dealParam = selectedDeal ? `deal=${selectedDeal}` : '';
+  const dealParam = selectedDeal ? `deal=${encodeURIComponent(selectedDeal)}` : '';
 
   const toggleSidebar = useCallback(() => {
     setIsShowSidebar(prev => !prev);
@@ -69,7 +69,6 @@ function App() {
               deals={deals}
               setShowNewDealModal={setShowNewDealModal}
               setDeals={setDeals}
-              selectedDeal={selectedDeal}
               setSelectedDeal={setSelectedDeal}
             />
           ) : (
@@ -78,6 +77,7 @@ function App() {
               dealParam={dealParam}
               selectedDeal={selectedDeal}
               setSelectedDeal={setSelectedDeal}
+              setLoading={setLoading}
             />
           )}
         </>

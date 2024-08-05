@@ -1,6 +1,28 @@
-.container {
+.addObjButton {
+  border-radius: 0.3rem;
+  border: 0.05rem solid rgba(255, 255, 255, 0.5);
+  padding: 0.8rem 1rem;
+  margin: 0.2rem;
+  text-align: center;
+}
+
+.buttonGrid {
   display: flex;
-  align-items: flex-start; /* Align items at the top */
+  flex-direction: row;
+  margin-top: 1rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  position: relative;
 }
 
 .arrow {
@@ -11,20 +33,79 @@
 }
 
 .selectedDeal {
-  flex: 1;
   text-align: center;
 }
 
-.uploadedFileItem {
+.folder {
   display: flex;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  background-color: #2b2c2f;
-  border-radius: 0.3rem;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
 }
 
-.uploadedFilesList {
+.folderContents {
+  margin-left: 20px;
+  width: 100%;
+  width: calc(100% - 20px);
+}
+
+.file {
   display: flex;
-  flex-direction: column; /* Arrange items in a column */
+  align-items: center;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.folderName{
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+}
+
+.folderHeader {
+  display: flex;
+  align-items: center;
   gap: 0.5rem;
+  padding: 0.1rem;
+  position: relative;
+}
+
+.folderHeader:hover {
+  background-color: #2b2c2f;
+}
+
+.file:hover {
+  background-color: #2b2c2f;
+}
+
+
+.trashIcon {
+  margin-left: auto;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.folderHeader:hover .trashIcon,
+.file:hover .trashIcon {
+  visibility: visible;
+}
+
+.fileIcon, .trashIcon {
+  width: 2rem;
+  flex-shrink: 0;
+}
+
+.folderContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  width: 100%;
+  margin-top: 1rem;
+  overflow-x: hidden;
+}
+
+.draggedOver {
+  background-color: #2b2c2f;
 }
