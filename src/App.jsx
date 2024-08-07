@@ -1,5 +1,5 @@
 // react
-import React, { useState, useLayoutEffect, useCallback } from "react";
+import React, { useState, useLayoutEffect, useCallback, useEffect } from "react";
 import { BiPlus, BiSolidUserCircle, BiSolidTrash } from "react-icons/bi";
 import { MdOutlineArrowLeft, MdOutlineArrowRight } from "react-icons/md";
 
@@ -12,11 +12,13 @@ import GenerateFile from "./components/GenerateFile/GenerateFile";
 import Loader from "./components/Loader/Loader";
 import Chat from "./components/Chat/Chat";
 import QaTracker from "./components/QaTracker/QaTracker";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 // api
 import { resetChatHistory } from "./api/chat";
 import { onFileGenerationRequested } from "./api/outputFiles";
 import { fetchDeals } from "./api/deals";
+import { fetchDashboardData } from "./api/dashboardData";
 
 function App() {
   const [text, setText] = useState("");
@@ -36,6 +38,13 @@ function App() {
   const user = params.get('user') ? params.get('user') : 'user';
   const userIdParam = `user=${user}`
   const dealParam = selectedDeal ? `deal=${encodeURIComponent(selectedDeal)}` : '';
+
+  const [dashboardData, setDashboardData] = useState({});
+  const displayDashboard = dealParam !== '' && Object.keys(dashboardData).length > 0;
+
+  useEffect(() => {
+    fetchDashboardData(userIdParam, dealParam, setDashboardData);
+  }, [userIdParam, selectedDeal]);
 
   const toggleSidebar = useCallback(() => {
     setIsShowSidebar(prev => !prev);
@@ -100,10 +109,10 @@ function App() {
           </div>
         </section>
         <section className="main">
-        <div className="main-header">
+        {/* <div className="main-header">
           <h1>Investment Banking Analyst</h1>
           <h3>How can I help you today?</h3>
-        </div>
+        </div> */}
         {isShowSidebar ? (
           <MdOutlineArrowRight className="burger" size={28.8} onClick={toggleSidebar} />
         ) : (
@@ -114,7 +123,14 @@ function App() {
         ) : (
           <MdOutlineArrowRight className="burger-right" size={28.8} onClick={toggleQuestionsSidebar} />
         )}
-          <Chat
+          {displayDashboard ? (
+            <Dashboard dashboardData={dashboardData} />
+          ) : selectedDeal === '' ? (
+            <div className="placeholder">Select a Deal</div>
+          ) : (
+            <div className="placeholder">Upload files</div>
+          )}
+          {/* <Chat
             chatHistory={chatHistory}
             setChatHistory={setChatHistory}
             text={text}
@@ -122,7 +138,7 @@ function App() {
             userIdParam={userIdParam}
             dealParam={dealParam}
             owner={user}
-          />
+          /> */}
         </section>
         {selectedDeal && (
         <QaTracker

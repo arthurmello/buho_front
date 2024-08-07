@@ -323,3 +323,12 @@ button {
     gap: 1rem;
   }
 }
+.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  font-style: italic;
+  text-align: center; /* Optional, to center the text within the placeholder */
+  font-size: 1.6em
+}
