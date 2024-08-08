@@ -27,7 +27,9 @@ const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, se
         e.preventDefault();
         const files = Array.prototype.slice.call(e.target.files);
         inputRef.current.value = null;
+        setLoading(true)
         await uploadFiles(userIdParam, dealParam, files);
+        setLoading(false)
         fetchUploadedFiles(userIdParam, dealParam, setUploadedFiles);
     };
 

@@ -123,14 +123,14 @@ function App() {
         ) : (
           <MdOutlineArrowRight className="burger-right" size={28.8} onClick={toggleQuestionsSidebar} />
         )}
-          {displayDashboard ? (
+          {/* {displayDashboard ? (
             <Dashboard dashboardData={dashboardData} />
           ) : selectedDeal === '' ? (
             <div className="placeholder">Select a Deal</div>
           ) : (
             <div className="placeholder">Upload files</div>
-          )}
-          {/* <Chat
+          )} */}
+          <Chat
             chatHistory={chatHistory}
             setChatHistory={setChatHistory}
             text={text}
@@ -138,7 +138,7 @@ function App() {
             userIdParam={userIdParam}
             dealParam={dealParam}
             owner={user}
-          /> */}
+          />
         </section>
         {selectedDeal && (
         <QaTracker

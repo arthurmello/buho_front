@@ -53,7 +53,7 @@ button {
 }
 
 .sidebar {
-  width: 22rem;
+  width: 20rem;
   padding: 1rem;
   gap: 1rem;
   display: flex;
@@ -331,4 +331,17 @@ button {
   font-style: italic;
   text-align: center; /* Optional, to center the text within the placeholder */
   font-size: 1.6em
+}
+
+.chat-message {
+  word-wrap: break-word; /* For older browsers */
+  max-width: 85%; /* Ensure the message does not exceed the container width */
+  display: block; /* Ensure block display to respect container's width */
+}
+
+
+.chat-source {
+  word-wrap: break-word; /* For older browsers */
+  max-width: 85%; /* Ensure the message does not exceed the container width */
+  display: block; /* Ensure block display to respect container's width */
 }
