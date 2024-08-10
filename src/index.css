@@ -65,6 +65,10 @@ button {
   transition: all 0.3s ease;
 }
 
+.sidebar.chat {
+  width: 30rem;
+}
+
 .sidebar.open {
   width: 0;
   padding: 0;
