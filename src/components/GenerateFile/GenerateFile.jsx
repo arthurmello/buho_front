@@ -38,7 +38,8 @@ const GenerateFile = ({
         <BiArrowBack 
         className="arrow"
         onClick={() => setSelectedFeature("")} />
-        <h3>Generate file</h3>
+        <h3 
+        style={{marginRight:70}}>Generate file</h3>
       </div>
 
         <form>

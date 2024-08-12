@@ -250,7 +250,7 @@ button {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 3rem;
 }
 
 .main-header h3 {
@@ -324,8 +324,8 @@ button {
 }
 
 .arrow {
-  position: relative;
-  left: 0;
+  /* position: relative;
+  left: 0; */
   margin-left: 1rem;
   cursor: pointer;
 }
