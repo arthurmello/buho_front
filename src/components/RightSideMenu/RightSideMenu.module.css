@@ -1,0 +1,51 @@
+.buttonGrid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.featureButtonsContainer {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.featureButton {
+  border-radius: 0.3rem;
+  border: 0.05rem solid rgba(255, 255, 255, 0.5);
+  padding: 0.8rem 1rem;
+  margin: 0.2rem;
+  width: 100%;
+  display: "flex";
+  align-items: "center" ;
+  text-align: "center";
+}
+
+.chatContainer {
+  width: 100%;
+  flex-grow: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatContainer .chat-history {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-bottom: 4rem;
+}
+
+.qaTrackerContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(32, 33, 35, 1);
+  overflow: auto;
+  
+}

@@ -1,5 +1,4 @@
-export const onFileGenerationRequested = async ({ filename, setShowFileGenerationModal, setLoading, userIdParam, dealParam }) => {
-    setShowFileGenerationModal(false);
+export const onFileGenerationRequested = async ({ filename, setLoading, userIdParam, dealParam }) => {
     setLoading(true);
   
     try {
