@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./QuestionForm.css";
 
+
 const QuestionForm = ({ onQuestionSubmit, owner, setOwner }) => {
   const [question, setQuestion] = useState("");
 

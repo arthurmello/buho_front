@@ -4,6 +4,7 @@ import { resetQaTracker, fetchQaTracker,  onQuestionSubmitted } from "../../api/
 import GenericModal from "../GenericModal/GenericModal";
 import QuestionForm from "../QuestionForm/QuestionForm";
 
+
 const QaTracker = ({
     userIdParam,
     dealParam,
@@ -26,7 +27,7 @@ const QaTracker = ({
                 <h3>Q&A Tracker</h3>
                 <div className="sidebar-info-clearchat" onClick={
                     () => resetQaTracker(userIdParam, dealParam, setQaTracker)
-                    } role="button">
+                    }>
                     <BiSolidTrash size={20} />
                 </div>
             </div>
@@ -42,9 +43,9 @@ const QaTracker = ({
                 ))}
             </div>
             <div className="sidebar-info">
-                <div className="sidebar-header" onClick={() => setShowQAModal(true)} role="button">
+                <div className="btn" onClick={() => setShowQAModal(true)}>
                     <BiPlus size={20} />
-                    <button>Add Question</button>
+                    Add Question
                 </div>
             </div>
 

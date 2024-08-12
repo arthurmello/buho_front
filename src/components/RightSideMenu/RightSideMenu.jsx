@@ -9,6 +9,7 @@ import GenerateFile from "../GenerateFile/GenerateFile";
 // css
 import styles from "./RightSideMenu.module.css";
 
+
 const RightSideMenu = ({
     userIdParam,
     dealParam,
@@ -22,12 +23,9 @@ const RightSideMenu = ({
             <div key={index} className={styles.buttonGrid}>
                 <div
                     onClick={() => setSelectedFeature(feature)}
-                    role="button"
-                    className={styles.featureButton}
+                    className="btn"
                 >
-                    <button >
-                        {feature}
-                    </button>
+                    {feature}
                 </div>
             </div>
         ));

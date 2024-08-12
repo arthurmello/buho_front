@@ -79,7 +79,7 @@ ${sources.map(doc => `
           <h3>Chat</h3>
           <div className="sidebar-info-clearchat" onClick={
             () => resetChatHistory(userIdParam, dealParam, setChatHistory)
-            } role="button">
+            }>
             <BiSolidTrash size={20} />
           </div>
       </div>
@@ -129,7 +129,7 @@ ${sources.map(doc => `
             style={{ overflow: 'hidden', resize: 'none' }} // Hide overflow
           />
           {!isResponseLoading && (
-            <button type="submit">
+            <button type="submit" className="submitButton">
               <BiSend size={20} />
             </button>
           )}

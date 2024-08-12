@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { BiPlus, BiSolidTrash , BiFolder} from "react-icons/bi";
 import styles from "./Deals.module.css";
+
 import { deleteDeal, fetchDeals } from "../../api/deals"
 
 const Deals = ({ userIdParam, setShowNewDealModal, deals, setDeals, setSelectedDeal}) => {
@@ -24,7 +25,7 @@ const Deals = ({ userIdParam, setShowNewDealModal, deals, setDeals, setSelectedD
     <>
       <div className={styles.container}>
         <div style={{ display: "flex", gap: "10px" }}>
-          <div className="sidebar-header" onClick={() => setShowNewDealModal(true)} role="button">
+          <div className="btn" onClick={() => setShowNewDealModal(true)}>
               <BiPlus size={20} />
               <p>New Deal</p>
           </div>

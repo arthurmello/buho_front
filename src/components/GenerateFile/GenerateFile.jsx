@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import { fetchFileNames } from "../../api/outputFiles";
 import { BiArrowBack } from "react-icons/bi";
 import "./GenerateFile.css";
+import "../../index.css"
 import { onFileGenerationRequested } from "../../api/outputFiles";
 
 const GenerateFile = ({
@@ -44,14 +45,13 @@ const GenerateFile = ({
 
         <form>
           {fileNames.map((filename, index) => (
-            <button
+            <div
               key={index}
-              type="button"
               className="btn"
               onClick={() => handleRequest(filename)}
             >
               {filename}
-            </button>
+            </div>
           ))}
       </form>
     </>

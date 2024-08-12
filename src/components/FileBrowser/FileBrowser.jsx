@@ -18,6 +18,7 @@ import {
 // css
 import styles from "./FileBrowser.module.css";
 
+
 const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, setLoading }) => {
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const inputRef = useRef();
@@ -83,23 +84,21 @@ const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, se
 
             <div className={styles.buttonGrid}>
                 <div
-                    className={styles.addObjButton}
+                    className="btn"
                     onClick={handleNewFolder}
-                    role="button"
                     style={{ display: "flex", alignItems: "center" }}
                 >
                     <BiPlus size={20} />
-                    <button>New folders</button>
+                    Add folder
                 </div>
 
                 <div
-                    className={styles.addObjButton}
+                    className="btn"
                     onClick={() => inputRef.current.click()}
-                    role="button"
                     style={{ display: "flex", alignItems: "center" }}
                 >
                     <BiPlus size={20} />
-                    <button>Add files</button>
+                    Add files
                     <input
                         ref={inputRef}
                         type="file"
@@ -121,13 +120,12 @@ const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, se
                     />)}
             </div>
                 <div
-                    className={styles.addObjButton}
+                    className="btn"
                     onClick={() => handleProcessFiles(userIdParam, dealParam)}
-                    role="button"
                     style={{ display: "flex", alignItems: "center" }}
                 >
                     <BiAnalyse size={20} />
-                    <button>Process files</button>
+                    Process files
                 </div>
         </div>
     );
