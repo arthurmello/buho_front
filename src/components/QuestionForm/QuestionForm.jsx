@@ -33,7 +33,7 @@ const QuestionForm = ({ onQuestionSubmit, owner, setOwner }) => {
           onChange={(e) => setOwner(e.target.value)}
         />
       </div>
-      <button type="submit" className="btn" disabled={!question || !owner}>
+      <button type="submit" className="btn" style={{fontSize: 18}} disabled={!question || !owner}>
         Submit
       </button>
     </form>

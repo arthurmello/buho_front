@@ -77,10 +77,10 @@ ${sources.map(doc => `
           className="arrow"
           onClick={() => setSelectedFeature("")} />
           <h3>Chat</h3>
-          <div className="sidebar-info-clearchat" onClick={
+          <div className="sidebar-info-clear" onClick={
             () => resetChatHistory(userIdParam, dealParam, setChatHistory)
             }>
-            <BiSolidTrash size={20} />
+            <BiSolidTrash size={20}/>
           </div>
       </div>
       {!isChatHistoryEmpty && (<div className="chat-history">

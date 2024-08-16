@@ -4,6 +4,8 @@ import { BiArrowBack, BiPlus, BiAnalyse} from "react-icons/bi";
 
 // components
 import Directory from "./Directory"
+import AddFolderForm from './AddFolderForm';
+import GenericModal from "../GenericModal/GenericModal";
 
 // api
 import {
@@ -11,7 +13,6 @@ import {
     fetchUploadedFiles,
     uploadFiles,
     deleteObject,
-    createFolder,
     moveObject,
     processFiles } from "../../api/inputFiles"
 
@@ -21,6 +22,7 @@ import styles from "./FileBrowser.module.css";
 
 const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, setLoading }) => {
     const [uploadedFiles, setUploadedFiles] = useState([]);
+    const [showAddFolderModal, setShowAddFolderModal] = useState(false);
     const inputRef = useRef();
     const allowedExtensions = fetchAllowedExtensions();
 
@@ -30,8 +32,8 @@ const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, se
         inputRef.current.value = null;
         setLoading(true)
         await uploadFiles(userIdParam, dealParam, files);
-        setLoading(false)
         fetchUploadedFiles(userIdParam, dealParam, setUploadedFiles);
+        setLoading(false)
     };
 
     async function handleDelete(userIdParam, dealParam, file) {
@@ -39,14 +41,6 @@ const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, se
         await deleteObject(userIdParam, dealParam, file);
         fetchUploadedFiles(userIdParam, dealParam, setUploadedFiles);
     }
-
-    async function handleNewFolder() {
-        const folderName = window.prompt("Enter the new folder name:");
-        if (folderName) {
-            await createFolder(userIdParam, dealParam, folderName);
-        }
-        fetchUploadedFiles(userIdParam, dealParam, setUploadedFiles);
-    };
 
     const handleMove = (userIdParam, dealParam, item, targetFolder) => {
         console.log(`Moving ${item} to ${targetFolder}`);
@@ -81,23 +75,26 @@ const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, se
             <div className={styles.selectedDeal}>
                 {selectedDeal}
             </div>
-
             <div className={styles.buttonGrid}>
-                <div
-                    className="btn"
-                    onClick={handleNewFolder}
-                    style={{ display: "flex", alignItems: "center" }}
-                >
-                    <BiPlus size={20} />
+                <div className="btn" onClick={() => setShowAddFolderModal(true)}>
+                    <BiPlus size={20} fill="white"/>
                     Add folder
                 </div>
-
+                <GenericModal show={showAddFolderModal} handleClose={() => setShowAddFolderModal(false)}>
+                    <AddFolderForm
+                        userIdParam={userIdParam}
+                        deal={selectedDeal}
+                        dealParam={dealParam}
+                        setShowAddFolderModal={setShowAddFolderModal}
+                        setUploadedFiles={setUploadedFiles}
+                    />
+                </GenericModal>
                 <div
                     className="btn"
                     onClick={() => inputRef.current.click()}
                     style={{ display: "flex", alignItems: "center" }}
                 >
-                    <BiPlus size={20} />
+                    <BiPlus size={20} fill="white" />
                     Add files
                     <input
                         ref={inputRef}
@@ -124,7 +121,7 @@ const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, se
                     onClick={() => handleProcessFiles(userIdParam, dealParam)}
                     style={{ display: "flex", alignItems: "center" }}
                 >
-                    <BiAnalyse size={20} />
+                    <BiAnalyse size={20} fill="white"/>
                     Process files
                 </div>
         </div>

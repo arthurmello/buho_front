@@ -30,34 +30,44 @@ const RightSideMenu = ({
             </div>
         ));
     };
+    const featureComponents = {
+        "Chat": (
+          <div className={styles.chatContainer}>
+            <Chat
+              userIdParam={userIdParam}
+              dealParam={dealParam}
+              setSelectedFeature={setSelectedFeature}
+            />
+          </div>
+        ),
+        "Q&A Tracker": (
+          <div className={styles.qaTrackerContainer}>
+            <QaTracker
+              userIdParam={userIdParam}
+              dealParam={dealParam}
+              setSelectedFeature={setSelectedFeature}
+            />
+          </div>
+        ),
+        "Generate file": (
+          <div>
+            <GenerateFile
+              userIdParam={userIdParam}
+              dealParam={dealParam}
+              setSelectedFeature={setSelectedFeature}
+              setLoading={setLoading}
+            />
+          </div>
+        ),
+      };
+    
     return (
         <>
             <div className={`sidebar ${isShowRightSideMenu ? "open" : ""}`}>
                 {!selectedFeature && <div className={styles.featureButtonsContainer}>
                     <FeatureButtons />
                 </div>}
-                {selectedFeature=="Chat" && <div className={styles.chatContainer}>
-                    <Chat
-                    userIdParam={userIdParam}
-                    dealParam={dealParam}
-                    setSelectedFeature={setSelectedFeature}
-                    />
-                </div>}
-                {selectedFeature=="Q&A Tracker" && <div className={styles.qaTrackerContainer}>
-                    <QaTracker
-                    userIdParam={userIdParam}
-                    dealParam={dealParam}
-                    setSelectedFeature={setSelectedFeature}
-                    />
-                </div>}
-                {selectedFeature=="Generate file" && <div>
-                    <GenerateFile
-                    userIdParam={userIdParam}
-                    dealParam={dealParam}
-                    setSelectedFeature={setSelectedFeature}
-                    setLoading={setLoading}
-                    />
-                </div>}
+                {featureComponents[selectedFeature]}
             </div>
         </>
     );

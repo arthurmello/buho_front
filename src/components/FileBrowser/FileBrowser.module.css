@@ -35,6 +35,7 @@
 
 .selectedDeal {
   text-align: center;
+  font-size: 1.1rem;
 }
 
 .folder {
@@ -73,11 +74,11 @@
 }
 
 .folderHeader:hover {
-  background-color: #2b2c2f;
+  background-color: #e0e2e7;
 }
 
 .file:hover {
-  background-color: #2b2c2f;
+  background-color: #e0e2e7;
 }
 
 

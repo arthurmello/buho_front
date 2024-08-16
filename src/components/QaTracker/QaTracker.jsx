@@ -25,7 +25,7 @@ const QaTracker = ({
                 className="arrow"
                 onClick={() => setSelectedFeature("")} />
                 <h3>Q&A Tracker</h3>
-                <div className="sidebar-info-clearchat" onClick={
+                <div className="sidebar-info-clear" onClick={
                     () => resetQaTracker(userIdParam, dealParam, setQaTracker)
                     }>
                     <BiSolidTrash size={20} />
@@ -37,27 +37,26 @@ const QaTracker = ({
                     className="question-box"
                     key={index}
                     >
-                    <p className="question-owner">{index + 1}. Question asked by: {history.owner}</p>
+                    <p className="question-owner">{index + 1}. Question from: {history.owner}</p>
                     <p className="question-text">{history.question}</p>
                     </div>
                 ))}
             </div>
             <div className="sidebar-info">
                 <div className="btn" onClick={() => setShowQAModal(true)}>
-                    <BiPlus size={20} />
+                    <BiPlus size={20} fill="white"/>
                     Add Question
                 </div>
             </div>
-
             <GenericModal show={showQAModal} handleClose={() => setShowQAModal(false)}>
-            <QuestionForm
-                onQuestionSubmit={
-                    (data) => onQuestionSubmitted(
-                        data, userIdParam, dealParam, setQaTracker, fetchQaTracker, setShowQAModal
-                    )} 
-                owner={owner}
-                setOwner={setOwner}
-            />
+                <QuestionForm
+                    onQuestionSubmit={
+                        (data) => onQuestionSubmitted(
+                            data, userIdParam, dealParam, setQaTracker, fetchQaTracker, setShowQAModal
+                        )} 
+                    owner={owner}
+                    setOwner={setOwner}
+                />
             </GenericModal>
         </>
     )

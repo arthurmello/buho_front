@@ -30,7 +30,9 @@ function App() {
   const dealParam = selectedDeal ? `deal=${encodeURIComponent(selectedDeal)}` : '';
   const [dashboardData, setDashboardData] = useState({});
   const displayDashboard = dealParam !== '' && Object.keys(dashboardData).length > 0;
-
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
   useEffect(() => {
     fetchDashboardData(userIdParam, dealParam, setDashboardData);
   }, [userIdParam, selectedDeal]);
@@ -82,7 +84,7 @@ function App() {
           <div className="sidebar-info">
             <div className="sidebar-info-user">
               <BiSolidUserCircle size={20} />
-              <p>User</p>
+              <p>{capitalizeFirstLetter(user)}</p>
             </div>
           </div>
         </section>
@@ -100,7 +102,7 @@ function App() {
           {displayDashboard ? (
             <Dashboard dashboardData={dashboardData} />
           ) : selectedDeal === '' ? (
-            <div className="placeholder">Select a Deal</div>
+            <div className="placeholder">Select a deal</div>
           ) : (
             <div className="placeholder">Upload files</div>
           )}
