@@ -78,6 +78,7 @@ function App() {
               selectedDeal={selectedDeal}
               setSelectedDeal={setSelectedDeal}
               setLoading={setLoading}
+              setDashboardData={setDashboardData}
             />
           )}
         </>

@@ -16,11 +16,12 @@ import {
     moveObject,
     processFiles } from "../../api/inputFiles"
 
+import { fetchDashboardData } from "../../api/dashboardData";
 // css
 import styles from "./FileBrowser.module.css";
 
 
-const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, setLoading }) => {
+const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, setLoading, setDashboardData }) => {
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const [showAddFolderModal, setShowAddFolderModal] = useState(false);
     const inputRef = useRef();
@@ -51,6 +52,7 @@ const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, se
     async function handleProcessFiles(userIdParam, dealParam) {
         setLoading(true)
         await processFiles(userIdParam, dealParam)
+        await fetchDashboardData(userIdParam, dealParam, setDashboardData)
         setLoading(false)
         ;
     };
