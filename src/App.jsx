@@ -1,4 +1,3 @@
-// react
 import React, { useState, useLayoutEffect, useCallback, useEffect } from "react";
 import { BiSolidUserCircle } from "react-icons/bi";
 import { MdOutlineArrowLeft, MdOutlineArrowRight } from "react-icons/md";
@@ -26,13 +25,15 @@ function App() {
   
   const params = new URLSearchParams(location.search);
   const user = params.get('user') || 'user';
-  const userIdParam = `user=${user}`
+  const userIdParam = `user=${user}`;
   const dealParam = selectedDeal ? `deal=${encodeURIComponent(selectedDeal)}` : '';
   const [dashboardData, setDashboardData] = useState({});
   const displayDashboard = dealParam !== '' && Object.keys(dashboardData).length > 0;
+
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
-}
+  }
+
   useEffect(() => {
     fetchDashboardData(userIdParam, dealParam, setDashboardData);
   }, [userIdParam, selectedDeal]);
@@ -42,7 +43,7 @@ function App() {
   }, []);
 
   const toggleQuestionsSidebar = useCallback(() => {
-  setIsShowRightSideMenu(prev => !prev);
+    setIsShowRightSideMenu(prev => !prev);
   }, []);
 
   useLayoutEffect(() => {
@@ -56,6 +57,22 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  // This useEffect runs once to check if the backend is awake
+  useEffect(() => {
+    const checkBackendStatus = async () => {
+      setLoading(true);
+      try {
+        await fetchDeals(userIdParam, setDeals); // Call the backend to check if it's awake
+      } catch (error) {
+        console.error("Failed to fetch deals:", error);
+      } finally {
+        setLoading(false); // Set loading to false after the call completes
+      }
+    };
+
+    checkBackendStatus();
+  }, [userIdParam]); // Empty dependency array ensures this runs only once
 
   return (
     <>
@@ -83,9 +100,8 @@ function App() {
           )}
         </>
           <div className="sidebar-info">
-            <div className="sidebar-info-user">
-              <BiSolidUserCircle size={20} />
-              <p>{capitalizeFirstLetter(user)}</p>
+            <div className="sidebar-info-logo" style={{ display: 'flex', justifyContent: 'center' }}>
+              <img src="/images/logo.png" width="30%"/>
             </div>
           </div>
         </section>
@@ -118,7 +134,7 @@ function App() {
         )}
           <GenericModal show={showNewDealModal} handleClose={() => setShowNewDealModal(false)}>
             <NewDealForm
-              userIdParam = {userIdParam}
+              userIdParam={userIdParam}
               setShowNewDealModal={setShowNewDealModal}
               fetchDeals={fetchDeals}
               setDeals={setDeals}

@@ -1,9 +1,9 @@
 .grid-container {
-    display: grid;
-    grid-template-rows: auto auto;
-    gap: 10px;
-  }
-  
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 10px;
+}
+
 .row1 {
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -11,7 +11,7 @@
 }
 
 .logo img {
-  width: 100px;
+  width: 60px;
   height: auto;
   margin: 5px 0;
   margin-left: 1rem;
@@ -34,12 +34,38 @@
 
 .summary {
   padding: 10px;
+  font-size: 0.9rem;
 }
 
 .kpi {
   padding: 10px;
 }
 
-.kpi h3 {
-  margin: 5px 0;
+.risks-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 10px;
+}
+
+.risks-category {
+  flex: 1;
+  min-width: 200px;
+  font-size: 0.9rem;
+}
+
+.risks-category h3 {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.risks-category ul {
+  padding-left: 20px;
+  list-style-type: disc;
+  margin-top: 0;
+}
+
+.risks-category li {
+  margin-bottom: 5px;
+  font-size: 0.85rem;
 }

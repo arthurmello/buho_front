@@ -82,7 +82,7 @@ ul {
 
 .sidebar {
   width: 20rem;
-  padding: 1rem;
+  padding: 0.5rem;
   gap: 1rem;
   display: flex;
   flex-direction: column;
@@ -157,11 +157,13 @@ ul {
 }
 
 .sidebar-info-user,
+.sidebar-info-logo,
 .sidebar-info-clear {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
+  text-align: center;
 }
 
 
