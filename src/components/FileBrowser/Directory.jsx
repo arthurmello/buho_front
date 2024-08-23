@@ -1,5 +1,4 @@
 // react
-// react
 import React, { useState, useRef } from "react";
 import { BiFile, BiSolidTrash, BiFolder } from "react-icons/bi";
 

@@ -1,60 +1,8 @@
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #2b2c2f;
-}
-
-.form-input{
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.form-label {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: white;
-  margin-bottom: 10px;
-}
-
 .deal {
   width: 100%;
   padding: 12px 20px;
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
-  background-color: #3d3f4c;
   font-size: 16px;
-  color: white;
-  }
-
-  .btn {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.8rem 1rem;
-    border-radius: 0.3rem;
-    border: 0.05rem solid rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    justify-content: center;
-    font-size: 1.2rem;
-  }
-  
-  .btn:hover {
-    background-color: #2b2c2f;
-  }
-
-  .btn:disabled {
-    background-color: #2b2c2f;
-    cursor: not-allowed;
   }

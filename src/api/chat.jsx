@@ -37,6 +37,18 @@ export const submitHandler = async (
   setIsResponseLoading(true);
   setErrorText("");
 
+  const newQuestionId = Date.now(); // Unique ID for the new question
+  const newQuestion = {
+    id: newQuestionId,
+    owner,
+    question: text,
+    answer: "Thinking...",
+    sources: [],
+  };
+
+  setChatHistory(prevHistory => [...prevHistory, newQuestion]);
+  setText("");
+
   const options = {
     method: "POST",
     headers: {
@@ -47,6 +59,7 @@ export const submitHandler = async (
       question: text,
     }),
   };
+
   try {
     const response = await fetch(
       `${import.meta.env.VITE_BACK_API_URL}/chat/ask?${userIdParam}&${dealParam}`,
@@ -62,24 +75,19 @@ export const submitHandler = async (
     const data = await response.json();
     if (data.error) {
       setErrorText(data.error);
-      setChatHistory((msg) => {
-        const updatedChatHistory = [...msg];
-        const lastElement = updatedChatHistory[updatedChatHistory.length - 1];
-        lastElement.answer = data.error;
-        return updatedChatHistory;
-      });
-      setText("");
+      setChatHistory(prevHistory =>
+        prevHistory.map(chat =>
+          chat.id === newQuestionId ? { ...chat, answer: data.error } : chat
+        )
+      );
     } else {
-      setChatHistory((msg) => [
-        ...msg,
-        {
-          question: text,
-          answer: data.answer,
-          owner: owner,
-          sources: data.sources,
-        },
-      ]);
-      setText("");
+      setChatHistory(prevHistory =>
+        prevHistory.map(chat =>
+          chat.id === newQuestionId
+            ? { ...chat, answer: data.answer, sources: data.sources }
+            : chat
+        )
+      );
       setTimeout(() => {
         scrollToLastItem.current?.lastElementChild?.scrollIntoView({
           behavior: "smooth",

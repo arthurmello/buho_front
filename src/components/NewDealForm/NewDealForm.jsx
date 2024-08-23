@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./NewDealForm.css";
+
 import { onDealCreation } from "../../api/deals";
 
 const NewDealForm = ({ userIdParam, setShowNewDealModal, setDeals, fetchDeals}) => {

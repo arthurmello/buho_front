@@ -4,6 +4,8 @@ import { BiArrowBack, BiPlus, BiAnalyse} from "react-icons/bi";
 
 // components
 import Directory from "./Directory"
+import AddFolderForm from './AddFolderForm';
+import GenericModal from "../GenericModal/GenericModal";
 
 // api
 import {
@@ -11,15 +13,17 @@ import {
     fetchUploadedFiles,
     uploadFiles,
     deleteObject,
-    createFolder,
     moveObject,
     processFiles } from "../../api/inputFiles"
 
+import { fetchDashboardData } from "../../api/dashboardData";
 // css
 import styles from "./FileBrowser.module.css";
 
-const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, setLoading }) => {
+
+const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, setLoading, setDashboardData }) => {
     const [uploadedFiles, setUploadedFiles] = useState([]);
+    const [showAddFolderModal, setShowAddFolderModal] = useState(false);
     const inputRef = useRef();
     const allowedExtensions = fetchAllowedExtensions();
 
@@ -27,8 +31,10 @@ const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, se
         e.preventDefault();
         const files = Array.prototype.slice.call(e.target.files);
         inputRef.current.value = null;
+        setLoading(true)
         await uploadFiles(userIdParam, dealParam, files);
         fetchUploadedFiles(userIdParam, dealParam, setUploadedFiles);
+        setLoading(false)
     };
 
     async function handleDelete(userIdParam, dealParam, file) {
@@ -36,14 +42,6 @@ const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, se
         await deleteObject(userIdParam, dealParam, file);
         fetchUploadedFiles(userIdParam, dealParam, setUploadedFiles);
     }
-
-    async function handleNewFolder() {
-        const folderName = window.prompt("Enter the new folder name:");
-        if (folderName) {
-            await createFolder(userIdParam, dealParam, folderName);
-        }
-        fetchUploadedFiles(userIdParam, dealParam, setUploadedFiles);
-    };
 
     const handleMove = (userIdParam, dealParam, item, targetFolder) => {
         console.log(`Moving ${item} to ${targetFolder}`);
@@ -54,6 +52,7 @@ const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, se
     async function handleProcessFiles(userIdParam, dealParam) {
         setLoading(true)
         await processFiles(userIdParam, dealParam)
+        await fetchDashboardData(userIdParam, dealParam, setDashboardData)
         setLoading(false)
         ;
     };
@@ -78,26 +77,27 @@ const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, se
             <div className={styles.selectedDeal}>
                 {selectedDeal}
             </div>
-
             <div className={styles.buttonGrid}>
-                <div
-                    className={styles.addObjButton}
-                    onClick={handleNewFolder}
-                    role="button"
-                    style={{ display: "flex", alignItems: "center" }}
-                >
-                    <BiPlus size={20} />
-                    <button>New folders</button>
+                <div className="btn" onClick={() => setShowAddFolderModal(true)}>
+                    <BiPlus size={20} fill="white"/>
+                    Add folder
                 </div>
-
+                <GenericModal show={showAddFolderModal} handleClose={() => setShowAddFolderModal(false)}>
+                    <AddFolderForm
+                        userIdParam={userIdParam}
+                        deal={selectedDeal}
+                        dealParam={dealParam}
+                        setShowAddFolderModal={setShowAddFolderModal}
+                        setUploadedFiles={setUploadedFiles}
+                    />
+                </GenericModal>
                 <div
-                    className={styles.addObjButton}
+                    className="btn"
                     onClick={() => inputRef.current.click()}
-                    role="button"
                     style={{ display: "flex", alignItems: "center" }}
                 >
-                    <BiPlus size={20} />
-                    <button>Add files</button>
+                    <BiPlus size={20} fill="white" />
+                    Add files
                     <input
                         ref={inputRef}
                         type="file"
@@ -119,13 +119,12 @@ const FileBrowser = ({ userIdParam, selectedDeal, setSelectedDeal, dealParam, se
                     />)}
             </div>
                 <div
-                    className={styles.addObjButton}
+                    className="btn"
                     onClick={() => handleProcessFiles(userIdParam, dealParam)}
-                    role="button"
                     style={{ display: "flex", alignItems: "center" }}
                 >
-                    <BiAnalyse size={20} />
-                    <button>Process files</button>
+                    <BiAnalyse size={20} fill="white"/>
+                    Process files
                 </div>
         </div>
     );

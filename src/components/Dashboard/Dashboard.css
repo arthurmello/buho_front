@@ -1,0 +1,71 @@
+.grid-container {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 10px;
+}
+
+.row1 {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 10px;
+}
+
+.logo img {
+  width: 60px;
+  height: auto;
+  margin: 5px 0;
+  margin-left: 1rem;
+  padding: 10px;
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  margin-left: 3.5rem;
+}
+
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 30% 70%;
+  gap: 10px;
+  padding: 10px;
+}
+
+.summary {
+  padding: 10px;
+  font-size: 0.9rem;
+}
+
+.kpi {
+  padding: 10px;
+}
+
+.risks-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 10px;
+}
+
+.risks-category {
+  flex: 1;
+  min-width: 200px;
+  font-size: 0.9rem;
+}
+
+.risks-category h3 {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.risks-category ul {
+  padding-left: 20px;
+  list-style-type: disc;
+  margin-top: 0;
+}
+
+.risks-category li {
+  margin-bottom: 5px;
+  font-size: 0.85rem;
+}

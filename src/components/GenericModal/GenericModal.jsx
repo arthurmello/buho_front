@@ -6,9 +6,9 @@ const GenericModal = ({ handleClose, show, children }) => {
 
   return (
     <div className={showHideClassName}>
-      <button type="button" onClick={handleClose} className="close">
-        X
-      </button>
+      <div onClick={handleClose} className="close">
+        Close
+      </div>
       <section className="modal-main">{children}</section>
     </div>
   );
