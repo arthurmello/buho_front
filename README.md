@@ -1,10 +1,46 @@
-# Buho
+# Arlo
 
-RAG tool for investment bankers.
+RAG tool for investment bankers. A powerful application that helps analyze and manage deal-related documents using AI.
 
-## Screenshots
+## Screenshot
 
-<img width="1430" alt="react-chatgpt-clone" src="https://github.com/uigywnkiub/react-chatgpt-clone/assets/29861553/c3f8b227-5567-4f29-95ff-43ea82069c08">
+<img width="1430" alt="react-chatgpt-clone" src="public/images/screenshot.png">
+
+## Features
+
+### 1. Deal Management
+- Create and organize multiple deals
+- Hierarchical file structure for each deal
+- Drag-and-drop file organization
+- Support for multiple file formats
+
+### 2. Document Analysis
+- AI-powered document processing
+- Automatic information extraction
+- Interactive dashboard with:
+  - Key Performance Indicators (KPIs)
+  - Deal summaries
+  - Risk analysis categorization
+  - Company information display
+
+### 3. AI Assistant
+- Interactive chat interface with context-aware responses
+- Document-based question answering
+- Source attribution for answers
+- Chat history tracking
+- Markdown support for formatted responses
+
+### 4. Q&A Tracker
+- Track important questions and answers
+- Organize deal-specific queries
+- Collaborative question management
+- Historical question archive
+
+### 5. Document Generation
+- Automated file generation based on analyzed documents
+- Customizable templates
+- User parameter inputs
+- Downloadable output files
 
 ## Installation
 
@@ -27,7 +63,3 @@ Start frontend server with vite.
 ```bash
   npm run dev:front
 ```
-
-## License
-
-[MIT License](LICENSE)
